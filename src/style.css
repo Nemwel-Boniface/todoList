@@ -1,8 +1,9 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 html,
 body {
   overflow-x: hidden;
@@ -17,12 +18,14 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 .todolist {
   margin: 20px 40px;
   width: 100%;
   background-color: #fff;
-  box-shadow: -1px -1px 15px 2px rgba(192,181,181,1);
+  box-shadow: -1px -1px 15px 2px rgba(192, 181, 181, 1);
 }
+
 .todoHeader {
   padding: 25px 20px;
   display: flex;
@@ -52,6 +55,10 @@ body {
   cursor: pointer;
 }
 
+.atask input {
+  margin-right: 15px;
+}
+
 .todoForm form input {
   outline: none;
   border: none;
@@ -64,19 +71,17 @@ body {
   display: flex;
 }
 
-.atask input {
-  margin-right: 15px;
-}
 .atask i {
   position: absolute;
   right: 11%;
   cursor: pointer;
 }
+
 .btn {
   text-align: center;
   width: 100%;
   padding: 15px;
   border-bottom: 1px solid #000;
-  opacity: .6;
+  opacity: 0.6;
   cursor: pointer;
 }

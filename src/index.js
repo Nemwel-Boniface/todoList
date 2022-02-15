@@ -1,7 +1,5 @@
-import _ from 'lodash';
+import _ from 'lodash'; //eslint-disable-line
 import './style.css';
-
-const id = 0;
 
 const tasks = [
   {
@@ -19,12 +17,12 @@ const tasks = [
     completed: true,
     index: 1,
   },
-]
+];
 
 const taskWrapper = document.querySelector('.activities');
 function displayTasks() {
   taskWrapper.innerHTML = '';
-  for(let i = 0; i < tasks.length; i += 1) {
+  for (let i = 0; i < tasks.length; i += 1) {
     taskWrapper.innerHTML += `
     <form class="atask">
       <input type="checkbox" id="${tasks[i].index}" name="task" value="task">
@@ -33,9 +31,7 @@ function displayTasks() {
     </form>
     `;
   }
-
 }
-{/* <p>${tasks[i].description}</p> */}
 window.addEventListener('load', () => {
   displayTasks();
-})
+});
