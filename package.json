@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Nemwel-Boniface/todoList#readme",
   "devDependencies": {
+    "html-webpack-plugin": "^5.5.0",
     "webpack": "^5.68.0",
     "webpack-cli": "^4.9.2"
   },
