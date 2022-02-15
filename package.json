@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --open",
     "build": "webpack"
   },
   "repository": {
@@ -20,10 +21,13 @@
   "homepage": "https://github.com/Nemwel-Boniface/todoList#readme",
   "devDependencies": {
     "css-loader": "^6.6.0",
+    "express": "^4.17.2",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.68.0",
-    "webpack-cli": "^4.9.2"
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-middleware": "^5.3.1",
+    "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
     "lodash": "^4.17.21"
