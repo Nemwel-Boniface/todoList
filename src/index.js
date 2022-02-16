@@ -1,28 +1,11 @@
 import _ from 'lodash'; //eslint-disable-line
 import './style.css';
 
-const tasks = [
-  {
-    description: 'Buy groceries',
-    completed: true,
-    index: 0,
-  },
-  {
-    description: 'Clean the House',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'Water the Flowers',
-    completed: true,
-    index: 2,
-  },
-];
-
+const tasks = [];
+const taskWrapper = document.querySelector('.activities');
 const newTask = document.querySelector('.newTask');
-
 const addNewTask = document.querySelector('.submit');
-let lengt = tasks.length;
+const lengt = tasks.length;
 
 function addtodo() {
   console.log('not done');
@@ -32,9 +15,22 @@ function addtodo() {
     completed: false,
     index: lengt,
   })
-
+  newTask.value = '';
   displayTasks();
   console.log(tasks);
+}
+
+function displayTasks() {
+  let form = document.createElement('form');
+  form.classList.add('atask');
+  tasks.forEach((description, index) => {
+  form.innerHTML = `
+  <input type="checkbox" id="${tasks[index].index}" ${tasks[index].completed ? 'checked' : ''} name="task" value="task">
+  <label for="${tasks[index].index}">${tasks[index].description}</label>
+  <i class="fas fa-ellipsis-v"></i><br>
+`;
+  taskWrapper.appendChild(form);
+  })
 }
 
 addNewTask.addEventListener('click', (e) => {
