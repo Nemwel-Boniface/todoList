@@ -48,11 +48,12 @@ body {
   justify-content: space-between;
 }
 
-#form button {
+.submit {
   outline: none;
   border: none;
   margin: auto 6%;
   cursor: pointer;
+  font-size: 25px;
 }
 
 .atask input {

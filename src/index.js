@@ -4,34 +4,40 @@ import './style.css';
 const tasks = [
   {
     description: 'Buy groceries',
-    completed: false,
+    completed: true,
     index: 0,
   },
   {
     description: 'Clean the House',
-    completed: true,
+    completed: false,
     index: 1,
   },
   {
     description: 'Water the Flowers',
     completed: true,
-    index: 1,
+    index: 2,
   },
 ];
 
-const taskWrapper = document.querySelector('.activities');
-function displayTasks() {
-  taskWrapper.innerHTML = '';
-  for (let i = 0; i < tasks.length; i += 1) {
-    taskWrapper.innerHTML += `
-    <form class="atask">
-      <input type="checkbox" id="${tasks[i].index}" name="task" value="task">
-      <label for="${tasks[i].index}">${tasks[i].description}</label>
-      <i class="fa fa fa-times"></i><br>
-    </form>
-    `;
-  }
-}
-window.addEventListener('load', () => {
+const newTask = document.querySelector('.newTask');
+
+const addNewTask = document.querySelector('.submit');
+let lengt = tasks.length;
+
+function addtodo() {
+  console.log('not done');
+  let lengt = tasks.length;
+  tasks.push({
+    description: newTask.value,
+    completed: false,
+    index: lengt,
+  })
+
   displayTasks();
-});
+  console.log(tasks);
+}
+
+addNewTask.addEventListener('click', (e) => {
+  e.preventDefault();
+  addtodo();
+})
