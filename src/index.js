@@ -5,13 +5,12 @@ let tasks = [];
 const taskWrapper = document.querySelector('.activities');
 const newTask = document.querySelector('.newTask');
 const addNewTask = document.querySelector('.submit');
-var removeTask = document.getElementById('removeTask');
-const lengt = tasks.length;
+const removeTask = document.getElementById('removeTask');
 
 // function removetodo(index) {
 //   console.log('clicked');
-//   this.tasks.splice(index, 1);
-//   this.displayTasks();
+//   tasks.splice(index, 1);
+//   displayTasks();
 // }
 
 function addToLocalStorage() {
@@ -19,10 +18,10 @@ function addToLocalStorage() {
 }
 
 function getFromLocalStorage() {
-  if (localStorage.getItem('myTasks')) {
-    tasks = JSON.parse(localStorage.getItem('myTasks'));
+  if (localStorage.getItem('myTasks') !== null) {
+     tasks = JSON.parse(localStorage.getItem('myTasks'));
   }
-  displayTasks();
+  return tasks;
 }
 function addtodo() {
   let lengt = tasks.length;
@@ -32,35 +31,39 @@ function addtodo() {
     index: lengt,
   })
   newTask.value = '';
-  addToLocalStorage(tasks);
   displayTasks();
-  console.log(tasks);
+  addToLocalStorage(tasks);
+  // console.log(tasks);
 }
 
 function displayTasks() {
-  let form = document.createElement('form');
-  form.classList.add('atask');
-  tasks.forEach((description, index) => {
-  form.innerHTML = `
-  <input type="checkbox" id="${tasks[index].index}" ${tasks[index].completed ? 'checked' : ''} name="task" value="task">
-  <label for="${tasks[index].index}">${tasks[index].description}</label>
-  <i id="removeTask" class="fas fa-ellipsis-v"></i><br>
-`;
+  let myVar = '';
+  let mylocal = getFromLocalStorage();
+  console.log(tasks);
+  let ul = document.createElement('ul');
+  ul.classList.add('atask');
 
+  mylocal.forEach((tas, index) => {
+  myVar += ` <li><input type="checkbox" id="${tasks[index].index}" ${tasks[index].completed ? 'checked' : ''} name="task" value="task"><span>${tas.description}</span> <i id="removeTask" class="fas fa-ellipsis-v"></i><br></li>`;
+
+  // const removeTask = document.getElementById('removeTask');
   // removeTask.addEventListener('click', () => {
   //   console.log('todo runs');
-  //   this.removetodo(tasks ,index);
-  //   displayTasks();
+  //   removetodo(index);
+  //   // displayTasks();
   // });
-  taskWrapper.appendChild(form);
-  })
+   taskWrapper.innerHTML = myVar;
+  });
 }
+
 
 addNewTask.addEventListener('click', (e) => {
   e.preventDefault();
   addtodo();
-})
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   getFromLocalStorage();
 });
+console.log(getFromLocalStorage());
+displayTasks();
