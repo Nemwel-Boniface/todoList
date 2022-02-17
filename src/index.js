@@ -1,14 +1,30 @@
 import _ from 'lodash'; //eslint-disable-line
 import './style.css';
 
-const tasks = [];
+let tasks = [];
 const taskWrapper = document.querySelector('.activities');
 const newTask = document.querySelector('.newTask');
 const addNewTask = document.querySelector('.submit');
+var removeTask = document.getElementById('removeTask');
 const lengt = tasks.length;
 
+// function removetodo(index) {
+//   console.log('clicked');
+//   this.tasks.splice(index, 1);
+//   this.displayTasks();
+// }
+
+function addToLocalStorage() {
+  localStorage.setItem('myTasks', JSON.stringify(tasks));
+}
+
+function getFromLocalStorage() {
+  if (localStorage.getItem('myTasks')) {
+    tasks = JSON.parse(localStorage.getItem('myTasks'));
+  }
+  displayTasks();
+}
 function addtodo() {
-  console.log('not done');
   let lengt = tasks.length;
   tasks.push({
     description: newTask.value,
@@ -16,6 +32,7 @@ function addtodo() {
     index: lengt,
   })
   newTask.value = '';
+  addToLocalStorage(tasks);
   displayTasks();
   console.log(tasks);
 }
@@ -27,8 +44,14 @@ function displayTasks() {
   form.innerHTML = `
   <input type="checkbox" id="${tasks[index].index}" ${tasks[index].completed ? 'checked' : ''} name="task" value="task">
   <label for="${tasks[index].index}">${tasks[index].description}</label>
-  <i class="fas fa-ellipsis-v"></i><br>
+  <i id="removeTask" class="fas fa-ellipsis-v"></i><br>
 `;
+
+  // removeTask.addEventListener('click', () => {
+  //   console.log('todo runs');
+  //   this.removetodo(tasks ,index);
+  //   displayTasks();
+  // });
   taskWrapper.appendChild(form);
   })
 }
@@ -37,3 +60,7 @@ addNewTask.addEventListener('click', (e) => {
   e.preventDefault();
   addtodo();
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+  getFromLocalStorage();
+});
