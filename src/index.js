@@ -12,6 +12,13 @@ function addToLocalStorage() {
   localStorage.setItem('myTasks', JSON.stringify(tasks));
 }
 
+function getFromLocalStorage() {
+  if(localStorage.getItem('myTasks')) {
+    tasks = JSON.parse(localStorage.getItem('myTasks'));
+  }
+  return tasks;
+}
+
 function addToTasks() {
   tasks.push({
     checked: false,
