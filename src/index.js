@@ -6,24 +6,38 @@ const taskWrapper = document.querySelector('.activities');
 const newTask = document.querySelector('.newTask');
 const addNewTask = document.querySelector('.submit');
 const removeTask = document.getElementById('removeTask');
-const lengt = tasks.length;
 
-function addToLocalStorage() {
+const addToLocalStorage = () => {
   localStorage.setItem('myTasks', JSON.stringify(tasks));
 }
 
-function getFromLocalStorage() {
+  const getFromLocalStorage = () => {
   if(localStorage.getItem('myTasks')) {
     tasks = JSON.parse(localStorage.getItem('myTasks'));
   }
   return tasks;
 }
 
-function displayTasks() {
+const editTask = (desc, index) => {
+  tasks[index].description = desc;
+  addToLocalStorage();
+}
+
+const rmvTask = (index) => {
+  let mylocal = getFromLocalStorage();
+  mylocal.splice(index, 1);
+  for(let i = index; i < mylocal.length; i += 1) {
+    mylocal[i].index = mylocal[i].index - 1;
+  }
+  addToLocalStorage();
+  displayTasks();
+}
+
+const displayTasks = () => {
   taskWrapper.innerHTML = '';
   let mylocal = getFromLocalStorage();
 
-  mylocal.forEach((tsk, index) => {
+  mylocal.forEach((tsk) => {
     let li = document.createElement('li');
     let checkbox = document.createElement('input');
     checkbox.setAttribute('type','checkbox');
@@ -31,22 +45,28 @@ function displayTasks() {
       checkbox.setAttribute('checked','checked');
     }
     checkbox.addEventListener('change',()=>onchange(tasks));
-    // li.appendChild(checkbox);
-    const taskDesc = document.createElement('span');
-    taskDesc.innerHTML = tsk.description;
-    // li.appendChild(taskDesc);
-    // const editbtn = document.createElement('button');
-    // editbtn.onclick = () => editDescription(todos);
-    const icon = document.createElement('i');
-    icon.classList.add('fas','fa-ellipsis-v');
-    // button.appendChild(icon);
-    // li.appendChild(icon);
-    li.append(checkbox, taskDesc, icon);
+
+    const taskDesc = document.createElement('input');
+    taskDesc.classList.add('todotask');
+    taskDesc.value = tsk.description;
+
+    const deleteTask = document.createElement('i');
+    taskDesc.addEventListener('change', (e) => {
+      e.preventDefault();
+      editTask(e.target.value, tsk.index);
+    })
+    deleteTask.classList.add('fas','fa-ellipsis-v');
+    deleteTask.addEventListener('click', () => {
+      rmvTask(tsk.index);
+    })
+
+    li.append(checkbox, taskDesc, deleteTask);
     taskWrapper.appendChild(li);
   })
 }
 
-function addToTasks() {
+const addToTasks = () => {
+  const lengt = tasks.length;
   tasks.push({
     checked: false,
     description: newTask.value,
@@ -66,5 +86,4 @@ addNewTask.addEventListener('click', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
   getFromLocalStorage();
   displayTasks();
-  console.log(tasks);
 })
