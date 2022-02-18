@@ -1,13 +1,14 @@
 import _ from 'lodash'; //eslint-disable-line
 import './style.css';
+import { setState } from './modules/getstates.js';
 
-let tasks = [];
+export let tasks = [];
 const taskWrapper = document.querySelector('.activities');
 const newTask = document.querySelector('.newTask');
 const addNewTask = document.querySelector('.submit');
 const clearAll = document.querySelector('.clearallBtn');
 
-const addToLocalStorage = () => {
+export const addToLocalStorage = () => {
   localStorage.setItem('myTasks', JSON.stringify(tasks));
 };
 
@@ -33,21 +34,11 @@ const editTask = (desc, index) => {
   addToLocalStorage();
 };
 
-let completedTasks = [];
-
-const addToCompletedTasks = (index) => {
-  completedTasks.push({
-    checked: true,
-    description: tasks[index].description,
-    index: tasks[index].index,
-  });
-  console.log(completedTasks);
-}
-
 const resetIndex = (item) => {
   for (let i = 0; i < tasks.length; i += 1) {
     tasks[i].index = tasks[i].index -= 1; //eslint-disable-line
   }
+  // tasks[i].index -= 1
   addToLocalStorage();
   displayTasks(); //eslint-disable-line
 }
@@ -61,16 +52,7 @@ clearAll.addEventListener('click', () => {
   ClearcompletedTasks();
 });
 
-const setState = (checkbox, index) => {
-  if (checkbox.checked) {
-    tasks[index].checked = true;
-    addToLocalStorage();
-    addToCompletedTasks(index);
-  } else {
-    tasks[index].checked = false;
-    addToLocalStorage();
-  }
-};
+
 
 const displayTasks = () => {
   taskWrapper.innerHTML = '';
