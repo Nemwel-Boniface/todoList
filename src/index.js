@@ -19,7 +19,6 @@ function getFromLocalStorage() {
   return tasks;
 }
 
-
 function displayTasks() {
   taskWrapper.innerHTML = '';
   let mylocal = getFromLocalStorage();
@@ -59,9 +58,13 @@ function addToTasks() {
   console.log(tasks)
 }
 
-
 addNewTask.addEventListener('click', (e) => {
   e.preventDefault();
   addToTasks();
 })
 
+document.addEventListener('DOMContentLoaded', () => {
+  getFromLocalStorage();
+  displayTasks();
+  console.log(tasks);
+})
