@@ -1,8 +1,8 @@
 import _ from 'lodash'; //eslint-disable-line
 import './style.css';
-import { setState } from './modules/getstates.js';
+import setState from './modules/getstates.js'; //eslint-disable-line
 
-export let tasks = [];
+export let tasks = []; //eslint-disable-line
 const taskWrapper = document.querySelector('.activities');
 const newTask = document.querySelector('.newTask');
 const addNewTask = document.querySelector('.submit');
@@ -34,14 +34,13 @@ const editTask = (desc, index) => {
   addToLocalStorage();
 };
 
-const resetIndex = (item) => {
+const resetIndex = () => {
   for (let i = 0; i < tasks.length; i += 1) {
     tasks[i].index = tasks[i].index -= 1; //eslint-disable-line
   }
-  // tasks[i].index -= 1
   addToLocalStorage();
   displayTasks(); //eslint-disable-line
-}
+};
 
 const ClearcompletedTasks = () => {
   tasks = tasks.filter((item) => item.checked === false);
@@ -51,8 +50,6 @@ const ClearcompletedTasks = () => {
 clearAll.addEventListener('click', () => {
   ClearcompletedTasks();
 });
-
-
 
 const displayTasks = () => {
   taskWrapper.innerHTML = '';
@@ -69,7 +66,6 @@ const displayTasks = () => {
       e.preventDefault();
       setState(e.target, tsk.index);
     });
-
 
     const taskDesc = document.createElement('input');
     taskDesc.classList.add('todotask');
@@ -88,7 +84,6 @@ const displayTasks = () => {
     li.append(checkbox, taskDesc, deleteTask);
     taskWrapper.appendChild(li);
   });
-  console.log(tasks)
 };
 
 const addToTasks = () => {
