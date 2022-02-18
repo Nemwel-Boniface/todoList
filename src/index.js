@@ -1,14 +1,18 @@
-import _ from 'lodash'; //eslint-disable-line
 import './style.css';
-import setState from './modules/getstates.js'; //eslint-disable-line
+import setState from './modules/getstates.js';
 
-export let tasks = []; //eslint-disable-line
+let tasks = [];
 const taskWrapper = document.querySelector('.activities');
 const newTask = document.querySelector('.newTask');
 const addNewTask = document.querySelector('.submit');
 const clearAll = document.querySelector('.clearallBtn');
+const reset = document.getElementById('reset');
 
-export const addToLocalStorage = () => {
+const clearallTasks = () => {
+  tasks = [];
+};
+
+const addToLocalStorage = () => {
   localStorage.setItem('myTasks', JSON.stringify(tasks));
 };
 
@@ -19,37 +23,22 @@ const getFromLocalStorage = () => {
   return tasks;
 };
 
+const resetIndex = (tasks) => {
+  for (let i = 0; i < tasks.length; i += 1) {
+    const indx = i + 1;
+    tasks[i].index = indx;
+  }
+};
+
 const rmvTask = (index) => {
   const mylocal = getFromLocalStorage();
   mylocal.splice(index, 1);
-  for (let i = index; i < mylocal.length; i += 1) {
-    mylocal[i].index = mylocal[i].index -= 1; //eslint-disable-line
-  }
-  addToLocalStorage();
-  displayTasks(); //eslint-disable-line
 };
 
 const editTask = (desc, index) => {
-  tasks[index].description = desc;
+  tasks[index - 1].description = desc;
   addToLocalStorage();
 };
-
-const resetIndex = () => {
-  for (let i = 0; i < tasks.length; i += 1) {
-    tasks[i].index = tasks[i].index -= 1; //eslint-disable-line
-  }
-  addToLocalStorage();
-  displayTasks(); //eslint-disable-line
-};
-
-const ClearcompletedTasks = () => {
-  tasks = tasks.filter((item) => item.checked === false);
-  resetIndex(tasks.item);
-};
-
-clearAll.addEventListener('click', () => {
-  ClearcompletedTasks();
-});
 
 const displayTasks = () => {
   taskWrapper.innerHTML = '';
@@ -64,7 +53,8 @@ const displayTasks = () => {
     }
     checkbox.addEventListener('change', (e) => {
       e.preventDefault();
-      setState(e.target, tsk.index);
+      setState(tasks, e.target, tsk.index);
+      addToLocalStorage();
     });
 
     const taskDesc = document.createElement('input');
@@ -75,10 +65,14 @@ const displayTasks = () => {
     taskDesc.addEventListener('change', (e) => {
       e.preventDefault();
       editTask(e.target.value, tsk.index);
+      taskDesc.blur();
     });
     deleteTask.classList.add('fas', 'fa-ellipsis-v');
     deleteTask.addEventListener('click', () => {
       rmvTask(tsk.index);
+      resetIndex(mylocal);
+      addToLocalStorage();
+      displayTasks();
     });
 
     li.append(checkbox, taskDesc, deleteTask);
@@ -86,12 +80,23 @@ const displayTasks = () => {
   });
 };
 
+const ClearcompletedTasks = () => {
+  tasks = tasks.filter((item) => item.checked === false);
+  resetIndex(tasks);
+  addToLocalStorage();
+  displayTasks();
+};
+
+clearAll.addEventListener('click', () => {
+  ClearcompletedTasks();
+});
+
 const addToTasks = () => {
   const lengt = tasks.length;
   tasks.push({
     checked: false,
     description: newTask.value,
-    index: lengt,
+    index: lengt + 1,
   });
   newTask.value = '';
   addToLocalStorage();
@@ -105,5 +110,11 @@ addNewTask.addEventListener('click', (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
   getFromLocalStorage();
+  displayTasks();
+});
+
+reset.addEventListener('click', () => {
+  clearallTasks();
+  addToLocalStorage();
   displayTasks();
 });

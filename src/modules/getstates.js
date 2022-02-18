@@ -1,12 +1,9 @@
-import { addToLocalStorage, tasks } from '../index.js'; //eslint-disable-line
-
-const setState = (checkbox, index) => {
+const setState = (tasks, checkbox, index) => {
+  const decre = index - 1;
   if (checkbox.checked) {
-    tasks[index].checked = true;
-    addToLocalStorage();
+    tasks[decre].checked = true;
   } else {
-    tasks[index].checked = false;
-    addToLocalStorage();
+    tasks[decre].checked = false;
   }
 };
 
