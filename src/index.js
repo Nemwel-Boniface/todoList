@@ -44,23 +44,17 @@ const addToCompletedTasks = (index) => {
   console.log(completedTasks);
 }
 
-const ClearcompletedTasks = () => {
-  // const mylocal = getFromLocalStorage();
-  // mylocal.forEach( (cmptsk) => {
-  //   if(cmptsk.checked === true) {
-  //     mylocal.splice(cmptsk.checked, 1);
-  //   }
-  // })
-  console.log(tasks);
-  tasks.forEach( (cmptsk) => {
-    if(cmptsk.checked === true) {
-      tasks.splice(cmptsk.index, 1);
-    }
-  })
-  console.log(tasks);
+const resetIndex = (item) => {
+  for (let i = 0; i < tasks.length; i += 1) {
+    tasks[i].index = tasks[i].index -= 1; //eslint-disable-line
+  }
   addToLocalStorage();
   displayTasks(); //eslint-disable-line
+}
 
+const ClearcompletedTasks = () => {
+  tasks = tasks.filter((item) => item.checked === false);
+  resetIndex(tasks.item);
 };
 
 clearAll.addEventListener('click', () => {
@@ -77,6 +71,7 @@ const setState = (checkbox, index) => {
     addToLocalStorage();
   }
 };
+
 const displayTasks = () => {
   taskWrapper.innerHTML = '';
   const mylocal = getFromLocalStorage();
@@ -85,15 +80,14 @@ const displayTasks = () => {
     const li = document.createElement('li');
     const checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
-    // checkbox.setAttribute('checked', 'checked');
     if (tsk.checked === true) {
-      console.log('does not run');
       checkbox.setAttribute('checked', 'checked');
     }
     checkbox.addEventListener('change', (e) => {
       e.preventDefault();
       setState(e.target, tsk.index);
     });
+
 
     const taskDesc = document.createElement('input');
     taskDesc.classList.add('todotask');
