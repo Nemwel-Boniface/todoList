@@ -5,6 +5,7 @@ let tasks = [];
 const taskWrapper = document.querySelector('.activities');
 const newTask = document.querySelector('.newTask');
 const addNewTask = document.querySelector('.submit');
+const clearAll = document.querySelector('.clearallBtn');
 
 const addToLocalStorage = () => {
   localStorage.setItem('myTasks', JSON.stringify(tasks));
@@ -32,6 +33,50 @@ const editTask = (desc, index) => {
   addToLocalStorage();
 };
 
+let completedTasks = [];
+
+const addToCompletedTasks = (index) => {
+  completedTasks.push({
+    checked: true,
+    description: tasks[index].description,
+    index: tasks[index].index,
+  });
+  console.log(completedTasks);
+}
+
+const ClearcompletedTasks = () => {
+  // const mylocal = getFromLocalStorage();
+  // mylocal.forEach( (cmptsk) => {
+  //   if(cmptsk.checked === true) {
+  //     mylocal.splice(cmptsk.checked, 1);
+  //   }
+  // })
+  console.log(tasks);
+  tasks.forEach( (cmptsk) => {
+    if(cmptsk.checked === true) {
+      tasks.splice(cmptsk.index, 1);
+    }
+  })
+  console.log(tasks);
+  addToLocalStorage();
+  displayTasks(); //eslint-disable-line
+
+};
+
+clearAll.addEventListener('click', () => {
+  ClearcompletedTasks();
+});
+
+const setState = (checkbox, index) => {
+  if (checkbox.checked) {
+    tasks[index].checked = true;
+    addToLocalStorage();
+    addToCompletedTasks(index);
+  } else {
+    tasks[index].checked = false;
+    addToLocalStorage();
+  }
+};
 const displayTasks = () => {
   taskWrapper.innerHTML = '';
   const mylocal = getFromLocalStorage();
@@ -40,10 +85,15 @@ const displayTasks = () => {
     const li = document.createElement('li');
     const checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
-    if (tasks.checked) {
+    // checkbox.setAttribute('checked', 'checked');
+    if (tsk.checked === true) {
+      console.log('does not run');
       checkbox.setAttribute('checked', 'checked');
     }
-    checkbox.addEventListener('change', () => onchange(tasks));
+    checkbox.addEventListener('change', (e) => {
+      e.preventDefault();
+      setState(e.target, tsk.index);
+    });
 
     const taskDesc = document.createElement('input');
     taskDesc.classList.add('todotask');
@@ -62,6 +112,7 @@ const displayTasks = () => {
     li.append(checkbox, taskDesc, deleteTask);
     taskWrapper.appendChild(li);
   });
+  console.log(tasks)
 };
 
 const addToTasks = () => {
