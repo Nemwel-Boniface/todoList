@@ -55,6 +55,7 @@ body {
   cursor: pointer;
   font-size: 25px;
 }
+
 .activities li {
   list-style-type: none;
   padding: 10px 0 10px 20px;
@@ -62,18 +63,22 @@ body {
   margin-bottom: 25px;
   border-bottom: 1px solid #000;
 }
+
 .activities li input {
   margin-right: 20px;
   cursor: pointer;
 }
+
 .activities li .todotask {
   outline: none;
   border: none;
 }
+
 .activities li .todotask:focus {
   outline: none;
   border-bottom: 1px solid #000;
 }
+
 .activities li i {
   position: absolute;
   right: 9%;
