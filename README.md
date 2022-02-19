@@ -10,7 +10,7 @@
 
 - HTML-5
 - CSS3
-- Javacript
+- Javacript modules
 - Webpack
 - Linters
 
@@ -37,12 +37,18 @@ Live site URL to Our Awesome Books
 - Open your command prompt or terminal and run.
 - git clone git@github.com:Nemwel-Boniface/todoList.git .
 
+### Usage
+To use it run the following commands
+To get the configurations of the app run ```npm install```
+To run the application run ```npm start```
+
 
 ### Run tests
 
 - To run tests run :
-- npx hint .
-- npx stylelint "**/*.{css,scss}"
+ ```npx hint .```
+ ```npx stylelint "**/*.{css,scss}"```
+``` npx eslint .```
 
 ### Deployment
 
