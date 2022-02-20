@@ -32,7 +32,7 @@ const resetIndex = (tasks) => {
 
 const rmvTask = (index) => {
   const mylocal = getFromLocalStorage();
-  mylocal.splice(index, 1);
+  mylocal.splice(index - 1, 1);
 };
 
 const editTask = (desc, index) => {
